@@ -1,0 +1,5 @@
+{
+    "key1": "some string",
+    "key2": 123,
+    "key3": [{"subkey1": 1, "subkey2": "string"}, {"subkey1": "not a number", "subkey2": "string"}]
+}

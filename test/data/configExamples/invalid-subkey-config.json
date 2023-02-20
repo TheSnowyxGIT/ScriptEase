@@ -1,0 +1,9 @@
+{
+    "key1": "some string",
+    "key2": 123,
+    "key3": {
+        "subkey1": true,
+        "subkey2": "another string",
+        "invalidSubkey": "this should cause an error"
+    }
+}
