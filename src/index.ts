@@ -7,7 +7,7 @@ import { builder, executor } from './singletons';
 doAll().catch((error) => {
   if (error instanceof SE_ERROR) {
     error.show();
-    process.exit(2);
+    process.exit(1);
   } else {
     throw error;
   }
