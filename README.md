@@ -1,1 +1,3 @@
 # ScriptEase
+
+update readme
