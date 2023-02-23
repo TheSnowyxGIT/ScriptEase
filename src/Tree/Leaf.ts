@@ -7,7 +7,7 @@ export type LeafExec = () => Promise<Result> | Result | void;
 
 class SE_LEAF extends SE_NODE {
   private _identifier: string;
-  private _fullIdentifier: string = '';
+  private _fullIdentifier: string;
   private _exec: LeafExec;
 
   public get identifier() {
@@ -25,6 +25,7 @@ class SE_LEAF extends SE_NODE {
   constructor(identifier: string, exec: LeafExec) {
     super('leaf');
     this._identifier = identifier;
+    this._fullIdentifier = identifier;
     this._exec = exec;
   }
 

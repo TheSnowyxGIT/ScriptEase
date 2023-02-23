@@ -116,7 +116,7 @@ export default class NodeManager {
   }
 
   public static async getLeaves(parent: SE_NODE): Promise<SE_LEAF[]> {
-    let leaves: SE_LEAF[] = [];
+    const leaves: SE_LEAF[] = [];
     await this.forEachLeaves(parent, async (node) => {
       leaves.push(node);
     });

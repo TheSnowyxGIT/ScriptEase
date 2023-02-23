@@ -1,10 +1,10 @@
+import SE_DuplicateNodeBuildError from '../errors/Build/SeDuplicateNodeBuildError';
 import SE_BRANCH from './Branch';
+import { AfterEachhook, AfterOncehook, BeforeEachhook, BeforeOncehook, Hookable } from './hooks';
 import SE_LEAF from './Leaf';
 import SE_NODE from './Node';
-import { AfterEachhook, AfterOncehook, BeforeEachhook, BeforeOncehook, Hookable } from './hooks';
 import NodeManager from './NodeManager';
 import SE_ROOT from './Root';
-import SE_DuplicateNodeBuildError from '../errors/Build/SeDuplicateNodeBuildError';
 
 class SE_SENTINEL extends SE_NODE implements Hookable {
   private _filePath: string;
@@ -41,6 +41,9 @@ class SE_SENTINEL extends SE_NODE implements Hookable {
 
   public override onAdded(parent: SE_ROOT): void {
     this._way = parent.getWay().concat([parent]);
+    for (const child of this.nodes) {
+      child.onAdded(this);
+    }
     return;
   }
 
@@ -49,6 +52,7 @@ class SE_SENTINEL extends SE_NODE implements Hookable {
       throw new SE_DuplicateNodeBuildError(node.type, node.identifier);
     }
     this.nodes.push(node);
+    node.onAdded(this);
   }
 
   public childCount(): number {

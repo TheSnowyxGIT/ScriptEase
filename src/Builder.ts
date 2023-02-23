@@ -58,7 +58,6 @@ export default class Builder {
     } else if (node instanceof SE_LEAF) {
       this.insertLeaf(node);
     }
-    node.onAdded(this.getHead());
     return node;
   }
 
@@ -78,7 +77,7 @@ export default class Builder {
   }
 
   public async checkDuplicatedLeaves() {
-    let allIdentifiers: Record<string, number> = {};
+    const allIdentifiers: Record<string, number> = {};
     await NodeManager.forEachLeaves(this.treeRoot, async (leaf) => {
       const fullIdentifier = leaf.fullIdentifier;
       if (!allIdentifiers[fullIdentifier]) {

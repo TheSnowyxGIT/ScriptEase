@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_BuildError from './SeBuildError';
 
 export default class SE_DuplicateNodeBuildError extends SE_BuildError {
-  public name: string = 'SE_DuplicateNodeBuildError';
+  public name = 'SE_DuplicateNodeBuildError';
   private _insertType: string;
   private _id: string;
 

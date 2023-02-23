@@ -1,7 +1,7 @@
+import SE_DuplicateNodeBuildError from '../errors/Build/SeDuplicateNodeBuildError';
+import { AfterEachhook, AfterOncehook, BeforeEachhook, BeforeOncehook, Hookable } from './hooks';
 import SE_NODE from './Node';
 import SE_SENTINEL from './Sentinel';
-import { AfterEachhook, AfterOncehook, BeforeEachhook, BeforeOncehook, Hookable } from './hooks';
-import SE_DuplicateNodeBuildError from '../errors/Build/SeDuplicateNodeBuildError';
 
 class SE_ROOT extends SE_NODE implements Hookable {
   private _sentinels: Record<string, SE_SENTINEL>;
@@ -19,6 +19,7 @@ class SE_ROOT extends SE_NODE implements Hookable {
   constructor() {
     super('root');
     this._sentinels = {};
+    this.onAdded(null);
   }
 
   /** @override functions */
@@ -31,7 +32,7 @@ class SE_ROOT extends SE_NODE implements Hookable {
   }
 
   public override onAdded(parent: null): void {
-    // will never be called
+    // useless (called in the constructor of a root)
     return;
   }
 
@@ -40,6 +41,7 @@ class SE_ROOT extends SE_NODE implements Hookable {
       throw new SE_DuplicateNodeBuildError(sentinel.type, sentinel.filePath);
     }
     this.sentinels[sentinel.filePath] = sentinel;
+    sentinel.onAdded(this);
   }
 
   public sentinelsCount(): number {

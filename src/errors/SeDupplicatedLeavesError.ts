@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_ERROR from './SeError';
 
 export default class SE_DuplicatedLeavesError extends SE_ERROR {
-  public name: string = 'SE_DuplicatedLeavesError';
+  public name = 'SE_DuplicatedLeavesError';
   private duplicatedLeaves: {
     identifier: string;
     occurences: number;

@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_ERROR from './SeError';
 
 export default class SE_InvalidArgsError extends SE_ERROR {
-  public name: string = 'SE_InvalidArgsError';
+  public name = 'SE_InvalidArgsError';
   private _message: string;
 
   public get message() {

@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_BuildError from './SeBuildError';
 
 export default class SE_DuplicateHookBuildError extends SE_BuildError {
-  public name: string = 'SE_DuplicateHookBuildError';
+  public name = 'SE_DuplicateHookBuildError';
   private _hookType: string;
 
   constructor(hookType: string) {

@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_BuildError from './SeBuildError';
 
 export default class SE_InsertBuildError extends SE_BuildError {
-  public name: string = 'SE_InsertBuildError';
+  public name = 'SE_InsertBuildError';
   private _insertType: string;
   private _parentType: string | undefined;
 

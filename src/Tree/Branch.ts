@@ -8,7 +8,7 @@ import SE_SENTINEL from './Sentinel';
 class SE_BRANCH extends SE_NODE implements Hookable {
   private _nodes: (SE_BRANCH | SE_LEAF)[];
   private _identifier: string;
-  private _fullIdentifier: string = '';
+  private _fullIdentifier: string;
 
   public get nodes() {
     return this._nodes;
@@ -31,6 +31,7 @@ class SE_BRANCH extends SE_NODE implements Hookable {
   constructor(identifier: string) {
     super('branch');
     this._identifier = identifier;
+    this._fullIdentifier = identifier;
     this._nodes = [];
   }
 
@@ -39,6 +40,7 @@ class SE_BRANCH extends SE_NODE implements Hookable {
       throw new SE_DuplicateNodeBuildError(node.type, this.fullIdentifier + ':' + node.identifier);
     }
     this._nodes.push(node);
+    node.onAdded(this);
   }
 
   public childCount(): number {
@@ -65,6 +67,9 @@ class SE_BRANCH extends SE_NODE implements Hookable {
       this._fullIdentifier = this.identifier;
     }
     this._way = parent.getWay().concat([parent]);
+    for (const child of this.nodes) {
+      child.onAdded(this);
+    }
   }
 }
 export default SE_BRANCH;

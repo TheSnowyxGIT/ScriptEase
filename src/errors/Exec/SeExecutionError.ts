@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_ERROR from '../SeError';
 
 export default abstract class SE_ExecutionError extends SE_ERROR {
-  public name: string = 'SE_ExecutionError';
+  public name = 'SE_ExecutionError';
   protected abstract error: any;
 
   public static error2String(error: any): string {

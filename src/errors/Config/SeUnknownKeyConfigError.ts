@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_InvalidConfigError from './SeInvalidConfig';
 
 export default class SE_UnknownKeyConfigError extends SE_InvalidConfigError {
-  public name: string = 'SE_UnknownKeyConfigError';
+  public name = 'SE_UnknownKeyConfigError';
   private _key: string;
 
   constructor(key: string) {
@@ -11,7 +11,7 @@ export default class SE_UnknownKeyConfigError extends SE_InvalidConfigError {
   }
 
   public toString(): string {
-    let text = chalk.gray(`The key '${chalk.white(this._key)}' is unknown.`);
+    const text = chalk.gray(`The key '${chalk.white(this._key)}' is unknown.`);
     return text;
   }
 }

@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_ExecutionError from './SeExecutionError';
 
 export default class SE_LeafExecutionError extends SE_ExecutionError {
-  public name: string = 'SE_LeafExecutionError';
+  public name = 'SE_LeafExecutionError';
   private _identifier: string;
   protected error: any;
 

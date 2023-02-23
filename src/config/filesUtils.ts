@@ -2,8 +2,8 @@ import SE_InvalidArgsError from '../errors/SeInvalidArgsError';
 import * as fs from 'fs';
 import * as path from 'path';
 
-export const fileRegex: RegExp = /.+\.script\.(ts|js)$/;
-export const fileRegexExample: string = '<filename>.script.(ts|js)';
+export const fileRegex = /.+\.script\.(ts|js)$/;
+export const fileRegexExample = '<filename>.script.(ts|js)';
 
 export function checkDirectory(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -21,8 +21,8 @@ export function checkFile(file: string) {
 }
 
 export function getMatchingFiles(dir: string, regex: RegExp) {
-  let queue: string[] = [dir];
-  let files: string[] = [];
+  const queue: string[] = [dir];
+  const files: string[] = [];
 
   while (queue.length > 0) {
     const currentDir = queue.shift() as string;
@@ -46,7 +46,7 @@ export function getMatchingFiles(dir: string, regex: RegExp) {
 }
 
 export function extractFiles(directories: string[], files: string[]): string[] {
-  let allFiles: Set<string> = new Set<string>();
+  const allFiles: Set<string> = new Set<string>();
 
   //  search for files recursively
   for (const dir of directories) {

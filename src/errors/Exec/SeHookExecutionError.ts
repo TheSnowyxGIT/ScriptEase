@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import SE_ExecutionError from './SeExecutionError';
 
 export default class SE_HookExecutionError extends SE_ExecutionError {
-  public name: string = 'SE_HookExecutionError';
+  public name = 'SE_HookExecutionError';
   protected error: any;
 
   constructor(error: any) {

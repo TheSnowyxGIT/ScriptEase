@@ -1,7 +1,8 @@
 import { getFiles, getIdentifiers } from './config/OptionMerger';
 import SE_ERROR from './errors/SeError';
 import Loader from './Loader';
-import { builder, executor, root } from './singletons';
+import { logger } from './Logger/Looger';
+import { builder, executor } from './singletons';
 
 doAll().catch((error) => {
   if (error instanceof SE_ERROR) {
@@ -13,6 +14,8 @@ doAll().catch((error) => {
 });
 
 async function doAll() {
+  logger.info('Starting ScriptEase.');
+
   const files = await getFiles();
   const loader = new Loader({ files }, builder);
   await loader.load();
@@ -22,4 +25,6 @@ async function doAll() {
   for (const identifier of identifiers) {
     await executor.run(identifier);
   }
+
+  logger.info('Close ScriptEase.');
 }
