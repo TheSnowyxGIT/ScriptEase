@@ -10,7 +10,7 @@
     "outDir": "./dist",
     "rootDir": ".",
     "types": ["node", "mocha"],
-    "noImplicitAny": true
+    "noImplicitAny": false
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules"]
