@@ -4,18 +4,18 @@
   "description": "ScriptEase is a powerful tool that allows for easy management and execution of npm scripts, written in JavaScript, on any operating system, enabling the creation of complex scripts",
   "main": "./dist/src/public/pubScriptEase.js",
   "types": "./dist/src/public/pubScriptEase.d.ts",
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/index.ts",
     "test": "ts-mocha test/**/*.spec.ts test/*.spec.ts",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint",
-    "preversion" : "npm run lint",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "cover": "nyc npm run test",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint --ext .ts src/",
+    "precommit": "npm run format",
+    "commit": "git-cz",
+    "prepare": "husky install"
   },
   "keywords": [
     "npm",
@@ -45,15 +45,21 @@
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.14.0",
     "@types/yargs": "^17.0.19",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
+    "eslint": "^8.34.0",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "prettier": "^2.8.4",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   }
 }

@@ -1,20 +1,17 @@
 {
-    "compilerOptions": {
-        "lib": ["ES2021"],
-        "target": "ES2021",
-        "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
-        "declaration": true,
-        "strict": true,
-        "outDir": "./dist",
-        "rootDir": ".",
-        "types": ["node", "mocha"]
-    },
-    "include": [
-        "src/**/*",
-        "test/**/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+  "compilerOptions": {
+    "lib": ["ES2021"],
+    "target": "ES2021",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "sourceMap": true,
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "types": ["node", "mocha"],
+    "noImplicitAny": true
+  },
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules"]
 }
