@@ -15,7 +15,7 @@
     "lint": "eslint --ext .ts src/",
     "lintFix": "eslint --fix --ext .ts src/",
     "prepare": "husky install",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release --branches main"
   },
   "keywords": [
     "npm",
