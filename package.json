@@ -1,5 +1,5 @@
 {
-  "name": "scriptease",
+  "name": "scriptease-cli",
   "version": "0.0.0-development",
   "description": "ScriptEase is a powerful tool that allows for easy management and execution of npm scripts, written in JavaScript, on any operating system, enabling the creation of complex scripts",
   "main": "./dist/src/public/pubScriptEase.js",
