@@ -8,6 +8,4 @@ export default class Result {
   public set payload(payload: any) {
     this._payload = payload;
   }
-
-  constructor() {}
 }

@@ -1,4 +1,4 @@
-import { existsSync, readFile, readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import * as path from 'path';
 import SE_InvalidTypeConfigError from '../errors/Config/SeInvalidTypeConfigError';
 import SE_UnknownKeyConfigError from '../errors/Config/SeUnknownKeyConfigError';
@@ -11,7 +11,14 @@ const CONFIG_FILE_NAME = 'seconfig.json';
 /**
  * The pattern for the config file
  */
-const PATTERN = {
+type Value = {
+  type: string;
+  children?: Value;
+};
+interface Pattern {
+  [key: string]: Value;
+}
+const PATTERN: Pattern = {
   directories: {
     type: 'array',
     children: {
@@ -25,6 +32,7 @@ const PATTERN = {
     },
   },
 };
+
 export interface SEConfig {
   directories?: string[];
   files?: string[];
@@ -38,19 +46,19 @@ export class Config {
   /**
    * The config object
    */
-  private config: any = {};
+  private config: { [key: string]: any } = {};
 
   /**
    * The pattern for the config object
    */
-  private pattern: any;
+  private pattern: Pattern;
 
   /**
    * Constructor for the Config class
    * @param {string} configPath - The path to the config file
    * @param {any} pattern - The pattern for the config file
    */
-  constructor(configPath: string, pattern: any) {
+  constructor(configPath: string, pattern: Pattern) {
     this._path = path.resolve(configPath);
     this.pattern = pattern;
   }
@@ -72,7 +80,7 @@ export class Config {
   private checkConfig() {
     for (const key in this.config) {
       // Check if the key exists in the pattern
-      if (!this.pattern.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(this.pattern, key)) {
         throw new SE_UnknownKeyConfigError(key);
       }
       this.checkValue(this.config[key], this.pattern[key], key);
@@ -82,7 +90,7 @@ export class Config {
   /**
    * Method for checking the value of a key in the config file against the pattern
    */
-  private checkValue(value: any, pattern: any, prefix: string) {
+  private checkValue(value: object, pattern: any, prefix: string) {
     if (pattern.type === 'array') {
       if (!Array.isArray(value)) {
         throw new SE_InvalidTypeConfigError(prefix, 'array', typeof value);
@@ -95,8 +103,8 @@ export class Config {
         throw new SE_InvalidTypeConfigError(prefix, pattern.type, typeof value);
       }
       if (pattern.type === 'object') {
-        for (const key in value) {
-          if (!pattern.children.hasOwnProperty(key)) {
+        for (const key of Object.keys(value)) {
+          if (!Object.prototype.hasOwnProperty.call(pattern.children, key)) {
             throw new SE_UnknownKeyConfigError(prefix);
           }
           this.checkValue(value[key], pattern.children[key], `${prefix}.${key}`);

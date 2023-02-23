@@ -1,6 +1,6 @@
 import Result from './Result';
 import SE_BRANCH from './Tree/Branch';
-import { EachHook, Hookable, HookHandler, OnceHook } from './Tree/hooks';
+import { HookHandler } from './Tree/hooks';
 import SE_LEAF from './Tree/Leaf';
 import NodeManager from './Tree/NodeManager';
 import SE_ROOT from './Tree/Root';
@@ -24,7 +24,7 @@ export default class Executor {
   }
 
   private async exec(leaf: SE_LEAF): Promise<Result> {
-    let result: Result;
+    let result: Result = new Result();
 
     await NodeManager.wayTraversal(leaf, {
       prefixe: {
@@ -53,7 +53,6 @@ export default class Executor {
       },
     });
 
-    // @ts-ignore
     return result;
   }
 
