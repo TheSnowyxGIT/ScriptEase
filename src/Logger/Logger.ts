@@ -5,7 +5,7 @@ export class Logger {
   static PREFIX = '[SE] ';
 
   private _activate = true;
-  private _logLevel = 2;
+  private _logLevel = 1;
 
   constructor() {
     this._activate = process.env.NODE_ENV !== 'test';

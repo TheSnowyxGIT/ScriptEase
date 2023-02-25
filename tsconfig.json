@@ -3,6 +3,7 @@
     "lib": ["ES2021"],
     "target": "ES2021",
     "moduleResolution": "node",
+    "module": "CommonJS",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "sourceMap": true,

@@ -1,5 +1,4 @@
 import Builder from '../src/Builder';
-import Result from '../src/Result';
 import SE_BRANCH from '../src/Tree/Branch';
 import SE_LEAF from '../src/Tree/Leaf';
 import NodeManager from '../src/Tree/NodeManager';
@@ -92,7 +91,7 @@ describe('Builder', () => {
   it('insert leaf into the root (should throw)', () => {
     const root = new SE_ROOT();
     const builder = new Builder(root);
-    const leaf = new SE_LEAF('myidentifier', () => new Result());
+    const leaf = new SE_LEAF('myidentifier', () => null);
     chai.expect(() => builder.insert(leaf)).to.throw();
   });
 
@@ -125,7 +124,7 @@ describe('Builder', () => {
     });
 
     it('insert a leaf', async () => {
-      const leaf = new SE_LEAF('id', () => new Result());
+      const leaf = new SE_LEAF('id', () => null);
       builder.insert(leaf);
       chai.expect(sentinel.isEmpty()).to.be.false;
       chai.expect(sentinel.childCount()).to.be.eq(1);
@@ -133,8 +132,8 @@ describe('Builder', () => {
     });
 
     it('insert two leaf', async () => {
-      const leaf = new SE_LEAF('id', () => new Result());
-      const leaf2 = new SE_LEAF('id2', () => new Result());
+      const leaf = new SE_LEAF('id', () => null);
+      const leaf2 = new SE_LEAF('id2', () => null);
       builder.insert(leaf);
       builder.insert(leaf2);
       chai.expect(sentinel.isEmpty()).to.be.false;
@@ -144,8 +143,8 @@ describe('Builder', () => {
     });
 
     it('insert two leaf (with the same identifier, should throw)', () => {
-      const leaf = new SE_LEAF('id', () => new Result());
-      const leaf2 = new SE_LEAF('id', () => new Result());
+      const leaf = new SE_LEAF('id', () => null);
+      const leaf2 = new SE_LEAF('id', () => null);
       builder.insert(leaf);
       chai.expect(() => builder.insert(leaf2)).to.throw();
     });
@@ -214,7 +213,7 @@ describe('Builder', () => {
     });
 
     it('insert a leaf', async () => {
-      const leaf = new SE_LEAF('id', () => new Result());
+      const leaf = new SE_LEAF('id', () => null);
       builder.insert(leaf);
       chai.expect(branch.isEmpty()).to.be.false;
       chai.expect(branch.childCount()).to.be.eq(1);
@@ -222,8 +221,8 @@ describe('Builder', () => {
     });
 
     it('insert two leaf', () => {
-      const leaf = new SE_LEAF('id', () => new Result());
-      const leaf2 = new SE_LEAF('id2', () => new Result());
+      const leaf = new SE_LEAF('id', () => null);
+      const leaf2 = new SE_LEAF('id2', () => null);
       builder.insert(leaf);
       builder.insert(leaf2);
       chai.expect(branch.isEmpty()).to.be.false;
@@ -233,8 +232,8 @@ describe('Builder', () => {
     });
 
     it('insert two leaf (with the same identifier, should throw)', () => {
-      const leaf = new SE_LEAF('id', () => new Result());
-      const leaf2 = new SE_LEAF('id', () => new Result());
+      const leaf = new SE_LEAF('id', () => null);
+      const leaf2 = new SE_LEAF('id', () => null);
       builder.insert(leaf);
       chai.expect(() => builder.insert(leaf2)).to.throw();
     });
@@ -286,8 +285,8 @@ describe('Builder', () => {
     it('insert two leaf with the same identifier in to different branch', async () => {
       const newBranch = new SE_BRANCH('id');
       const newBranch2 = new SE_BRANCH('id');
-      const leaf = new SE_LEAF('leaf', () => new Result());
-      const leaf2 = new SE_LEAF('leaf', () => new Result());
+      const leaf = new SE_LEAF('leaf', () => null);
+      const leaf2 = new SE_LEAF('leaf', () => null);
       builder.insert(newBranch);
       builder.insert(newBranch2);
       builder.moveHeadTo(newBranch);

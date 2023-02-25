@@ -1,9 +1,9 @@
-import Result from '../Result';
+import Result from '../Results/Result';
 import SE_BRANCH from './Branch';
 import SE_NODE from './Node';
 import SE_SENTINEL from './Sentinel';
 
-export type LeafExec = () => Promise<Result> | Result | void;
+export type LeafExec = () => Promise<Result> | Result | unknown;
 
 class SE_LEAF extends SE_NODE {
   private _identifier: string;

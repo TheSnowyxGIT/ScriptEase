@@ -1,4 +1,4 @@
-import { Logger } from './Looger';
+import { Logger } from './Logger';
 
 type Writer = { writer: (logLevel: number, data: any) => void; minLogLevel?: number };
 

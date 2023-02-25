@@ -1,3 +1,13 @@
 {
-  "cSpell.words": ["adrien", "commitlint", "Eachhook", "Hookable", "Oncehook", "pingard", "precommit"]
+  "cSpell.words": [
+    "adrien",
+    "commitlint",
+    "Eachhook",
+    "Hookable",
+    "NOTEXECUTED",
+    "NOVALID",
+    "Oncehook",
+    "pingard",
+    "precommit"
+  ]
 }

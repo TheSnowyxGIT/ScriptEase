@@ -7,6 +7,9 @@
   "files": [
     "dist/**/*"
   ],
+  "bin": {
+    "se": "bin/se.js"
+  },
   "scripts": {
     "build": "tsc",
     "test": "ts-mocha test/**/*.spec.ts test/*.spec.ts",

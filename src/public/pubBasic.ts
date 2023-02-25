@@ -1,4 +1,3 @@
-import Result from '../Result';
 import { builder } from '../singletons';
 import SE_BRANCH from '../Tree/Branch';
 import SE_LEAF, { LeafExec } from '../Tree/Leaf';

@@ -1,6 +1,6 @@
 import Builder from './Builder';
+import { logger } from './Logger/Logger';
 import LoggerContext from './Logger/LoggerContext';
-import { logger } from './Logger/Looger';
 import SE_SENTINEL from './Tree/Sentinel';
 
 type Infos = { files: string[] };
@@ -17,25 +17,25 @@ export default class Loader {
     this.loggerContext.define('start', {
       minLogLevel: 2,
       writer: (logLevel, data: { filesCount: number }) => {
-        logger.info(`[Loader] ${data.filesCount} files to load.`);
+        logger.info(`${data.filesCount} files to load.`);
       },
     });
     this.loggerContext.define('load', {
       minLogLevel: 2,
       writer: (logLevel, data: { filePath: number }) => {
-        logger.info(`[Loader] \t'${data.filePath}' loaded.`);
+        logger.info(`\t'${data.filePath}' loaded.`);
       },
     });
     this.loggerContext.define('end', {
       writer: (logLevel, data: { filesCount: number }) => {
-        logger.info(`[Loader] ${data.filesCount} files loaded.`);
+        logger.info(`${data.filesCount} files loaded.`);
       },
     });
   }
 
   public async load() {
     if (this.infos.files.length === 0) {
-      logger.warn('[Loader] No file(s) to load.');
+      logger.warn('No file(s) to load.');
       return;
     }
     this.loggerContext.send('start', { filesCount: this.infos.files.length });
