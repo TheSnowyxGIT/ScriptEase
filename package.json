@@ -34,24 +34,23 @@
     "tool"
   ],
   "author": "adrien pingard",
-  "license": "MTI",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",
-    "file-url": "^4.0.0",
-    "fs-extra": "^11.1.0",
-    "yargs": "^17.6.2"
+    "commander": "^10.0.0",
+    "findup-sync": "^5.0.0",
+    "fs-extra": "^11.1.0"
   },
   "devDependencies": {
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^8.0.7",
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.7",
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
     "@types/fs-extra": "^11.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.14.0",
-    "@types/yargs": "^17.0.19",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "chai": "^4.3.7",

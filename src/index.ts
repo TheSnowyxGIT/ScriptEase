@@ -1,41 +1,41 @@
-import { getFiles, getIdentifiers } from './config/OptionMerger';
+import * as chalk from 'chalk';
+import { program } from 'commander';
+import * as findUp from 'findup-sync';
+import { readFileSync } from 'fs';
+import getRunCommand from './Commands/run';
 import SE_ERROR from './errors/SeError';
-import SE_ExecutionError from './errors/SeExecutionError';
-import SE_InvalidArgsError from './errors/SeInvalidArgsError';
-import Loader from './Loader';
 import { logger } from './Logger/Logger';
-import Result, { STATE } from './Results/Result';
-import { builder, executor, root } from './singletons';
-import NodeManager from './Tree/NodeManager';
 
 doAll().catch((error) => {
   if (error instanceof SE_ERROR) {
     error.show();
-    process.exit(1);
   } else {
-    throw error;
+    console.log(error);
   }
+  process.exit(1);
 });
 
+const commanderConfig = {
+  // Visibly override write routines as example!
+  writeErr: (str: string) => {
+    str = str.replace('error:', chalk.red('ERROR:'));
+    process.stdout.write(`${logger.prefix} ${str}`);
+  },
+  writeOut: (str: string) => process.stdout.write(`${logger.prefix}${str}`),
+};
+
 async function doAll() {
-  const files = await getFiles();
-  const loader = new Loader({ files }, builder);
-  await loader.load();
+  const packageJsonPath = await findUp('package.json');
+  const version = packageJsonPath ? JSON.parse(readFileSync(packageJsonPath, 'utf-8')).version : 'Unknown version';
+  program.name('ScriptEase').description('CLI for running Javascript scripts').version(version);
+  program.configureOutput(commanderConfig);
 
-  const hasLeaves = (await NodeManager.getLeavesCount(root)) > 0;
-  if (hasLeaves) {
-    const identifiers = await getIdentifiers();
+  const commands = [getRunCommand()];
 
-    if (identifiers.length > 1) {
-      throw new SE_InvalidArgsError('only one identifier at the same time is supported for now.');
-    } else if (identifiers.length !== 0) {
-      const result = await executor.run(identifiers[0], { crash: false });
-      Result.showResult(result);
-      if (result.getState() === STATE.NOVALID) {
-        throw new SE_ExecutionError(identifiers[0]);
-      }
-    }
-  } else {
-    logger.warn('No scripts to execute.');
+  for (const command of commands) {
+    command.configureOutput(commanderConfig);
+    program.addCommand(command);
   }
+
+  await program.parseAsync();
 }

@@ -1,4 +1,4 @@
-import Result from '../Results/Result';
+import Result from '../Result/Result';
 import SE_BRANCH from './Branch';
 import SE_NODE from './Node';
 import SE_SENTINEL from './Sentinel';

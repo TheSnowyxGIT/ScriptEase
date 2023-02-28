@@ -1,4 +1,5 @@
 import Builder from './Builder';
+import SE_InvalidArgsError from './errors/SeInvalidArgsError';
 import { logger } from './Logger/Logger';
 import LoggerContext from './Logger/LoggerContext';
 import SE_SENTINEL from './Tree/Sentinel';
@@ -17,26 +18,25 @@ export default class Loader {
     this.loggerContext.define('start', {
       minLogLevel: 2,
       writer: (logLevel, data: { filesCount: number }) => {
-        logger.info(`${data.filesCount} files to load.`);
+        //logger.info(`${data.filesCount} files to load.`);
       },
     });
     this.loggerContext.define('load', {
       minLogLevel: 2,
       writer: (logLevel, data: { filePath: number }) => {
-        logger.info(`\t'${data.filePath}' loaded.`);
+        //logger.info(`\t'${data.filePath}' loaded.`);
       },
     });
     this.loggerContext.define('end', {
       writer: (logLevel, data: { filesCount: number }) => {
-        logger.info(`${data.filesCount} files loaded.`);
+        //logger.info(`${data.filesCount} files loaded.`);
       },
     });
   }
 
   public async load() {
     if (this.infos.files.length === 0) {
-      logger.warn('No file(s) to load.');
-      return;
+      throw new SE_InvalidArgsError('No script files given.');
     }
     this.loggerContext.send('start', { filesCount: this.infos.files.length });
     for (const file of this.infos.files) {
@@ -44,7 +44,7 @@ export default class Loader {
       this.loggerContext.send('load', { filePath: file });
     }
     // after check
-    this.builder.checkBuild();
+    await this.builder.checkBuild();
     this.loggerContext.send('end', { filesCount: this.infos.files.length });
   }
 

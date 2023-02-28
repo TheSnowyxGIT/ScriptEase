@@ -1,8 +1,6 @@
 import SE_MissingScriptError from './errors/MissingScriptError';
-import ErrorResult from './Results/ErrorLeafResult';
-import PayloadLeafResult from './Results/PayloadLeafResult';
-import Result from './Results/Result';
-import ResultLeafResult from './Results/ResultLeafResult';
+import LeafResult from './Result/LeafResult';
+import Result from './Result/Result';
 import SE_BRANCH from './Tree/Branch';
 import { HookHandler } from './Tree/hooks';
 import SE_LEAF from './Tree/Leaf';
@@ -32,7 +30,7 @@ export default class Executor {
   }
 
   private async exec(leaf: SE_LEAF, options: runOption): Promise<Result> {
-    let result: Result = new PayloadLeafResult(leaf, '');
+    let result: Result = LeafResult.fromPayload(leaf, '');
     let hasCrash = false;
     let catchError: unknown;
 
@@ -69,7 +67,15 @@ export default class Executor {
     }
 
     if (hasCrash) {
-      const errorResult = new ErrorResult(leaf, catchError);
+      let errorResult: Result;
+      if (catchError instanceof Result) {
+        const rootParent = catchError.getRootParent();
+        const leafResult = LeafResult.fromChild(leaf, rootParent);
+        rootParent.setParent(leafResult);
+        errorResult = catchError;
+      } else {
+        errorResult = LeafResult.fromError(leaf, catchError);
+      }
       if (options.crash) {
         throw errorResult;
       }
@@ -80,12 +86,13 @@ export default class Executor {
 
   private async execLeaf(leaf: SE_LEAF): Promise<Result> {
     const valueReceived = await leaf.exec();
-    let result: Result;
     if (valueReceived instanceof Result) {
-      result = new ResultLeafResult(leaf, valueReceived);
+      const rootParent = valueReceived.getRootParent();
+      const leafResult = LeafResult.fromChild(leaf, rootParent);
+      rootParent.setParent(leafResult);
+      return valueReceived;
     } else {
-      result = new PayloadLeafResult(leaf, valueReceived);
+      return LeafResult.fromPayload(leaf, valueReceived);
     }
-    return result;
   }
 }

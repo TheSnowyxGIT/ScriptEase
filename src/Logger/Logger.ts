@@ -22,28 +22,28 @@ export class Logger {
   }
 
   public get prefix() {
-    return chalk.blue(Logger.PREFIX) + ' ';
+    return chalk.blue(Logger.PREFIX);
   }
 
   public info(message: string) {
     if (!this._activate || this.logLevel < 1) {
       return;
     }
-    console.log(this.prefix + chalk.blue('') + message);
+    console.log(this.prefix + message);
   }
 
   public warn(message: string) {
     if (!this._activate) {
       return;
     }
-    console.warn(this.prefix + chalk.magenta('[WARNING] ') + message);
+    console.warn(this.prefix + chalk.magenta('WARNING: ') + message);
   }
 
   public error(message: string) {
     if (!this._activate) {
       return;
     }
-    console.error(this.prefix + chalk.red('[ERROR] ') + message);
+    console.error(this.prefix + chalk.red('ERROR: ') + message);
   }
 }
 
