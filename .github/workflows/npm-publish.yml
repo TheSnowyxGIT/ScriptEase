@@ -37,10 +37,28 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Check AT_TOKEN Secret
+        run: |
+          if [[ -n "$AT_TOKEN" ]]; then
+            echo "AT_TOKEN: YES"
+          else
+            echo "AT_TOKEN: NO"
+          fi
+        env:
+          AT_TOKEN: ${{ secrets.AT_TOKEN }}
+
+      - name: Check NPM_AUTOMATION_TOKEN Secret
+        run: |
+          if [[ -n "$NPM_AUTOMATION_TOKEN" ]]; then
+            echo "NPM_AUTOMATION_TOKEN: YES"
+          else
+            echo "NPM_AUTOMATION_TOKEN: NO"
+          fi
+        env:
+          NPM_AUTOMATION_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
       - run: npm ci
       - run: npm run build
       - name: Run Semantic Release
-        if: ${{ env.AT_TOKEN != '' && env.NPM_AUTOMATION_TOKEN != '' }}
         run: npm run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.AT_TOKEN }}
