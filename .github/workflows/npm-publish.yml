@@ -40,7 +40,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - name: Run Semantic Release
-        if: ${{ secrets.AT_TOKEN != '' && secrets.NPM_AUTOMATION_TOKEN != '' }}
+        if: ${{ env.AT_TOKEN != '' && env.NPM_AUTOMATION_TOKEN != '' }}
         run: npm run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.AT_TOKEN }}
