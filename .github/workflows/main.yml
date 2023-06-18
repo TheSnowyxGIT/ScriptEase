@@ -1,4 +1,4 @@
-name: <choose the name>
+name: Pull Request Testing and Linting
 
 on:
   pull_request:
