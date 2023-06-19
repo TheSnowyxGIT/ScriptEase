@@ -11,7 +11,7 @@
     "se": "bin/se.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && rm -rf dist/test",
     "test": "jest",
     "cover": "jest --coverage",
     "format": "prettier --write \"src/**/*.ts\"",
