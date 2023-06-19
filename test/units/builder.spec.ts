@@ -1,9 +1,10 @@
-import Builder from '../src/Builder';
-import SE_BRANCH from '../src/Tree/Branch';
-import SE_LEAF from '../src/Tree/Leaf';
-import NodeManager from '../src/Tree/NodeManager';
-import SE_ROOT from '../src/Tree/Root';
-import SE_SENTINEL from '../src/Tree/Sentinel';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import Builder from 'src/Builder';
+import SE_BRANCH from 'src/Tree/Branch';
+import SE_LEAF from 'src/Tree/Leaf';
+import NodeManager from 'src/Tree/NodeManager';
+import SE_ROOT from 'src/Tree/Root';
+import SE_SENTINEL from 'src/Tree/Sentinel';
 
 import * as chai from 'chai';
 import { expect } from 'chai';
