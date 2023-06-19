@@ -1,8 +1,7 @@
 [![NPM version](https://badge.fury.io/js/scriptease-cli.svg)](http://badge.fury.io/js/scriptease-cli)
-![Tests](https://github.com/TheSnowyxGIT/ScriptEase/actions/workflows/publish.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/TheSnowyxGIT/ScriptEase/badge.svg?branch=master)](https://coveralls.io/github/TheSnowyxGIT/ScriptEase?branch=master)
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-![Commitizen friendly](https://camo.githubusercontent.com/847f705aa5b3f8a278c0d31f90d933a0d1b89694754ada82ae94bdb78d4ccf13/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2545322539432539342545462542382538462d5453253230436865636b65642d626c75652e737667)
 
 ScriptEase is a powerful tool that allows for easy management and execution of npm scripts, written in JavaScript, on any operating system, enabling the creation of complex scripts
 
@@ -45,7 +44,7 @@ _npm_ is the only package manager yet supported.
 npm install --save-dev scriptease-cli
 mkdir scripts
 touch seconfig.json scripts/all.script.js
-$EDITOR scritps/all.script.js
+$EDITOR scripts/all.script.js
 $EDITOR seconfig.json
 ```
 
@@ -282,7 +281,7 @@ leaf('cover', async () => {
 branch('cover', () => {
   leaf('parser', async () => {
     const reportPath = './cover/parser';
-    const result = await runner.npxExec('nyc', ... , { crash: false }); // 'crash' have been set to true for stoping the function to throw
+    const result = await runner.npxExec('nyc', ... , { crash: false }); // 'crash' have been set to false for stopping the function to throw
     result.setPayload(reportPath);
     if (result.isKO()) throw result;
     return result;
