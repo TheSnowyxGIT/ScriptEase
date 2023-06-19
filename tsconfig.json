@@ -10,9 +10,9 @@
     "strict": true,
     "outDir": "./dist",
     "rootDir": ".",
-    "types": ["node", "mocha"],
+    "baseUrl": "./",
     "noImplicitAny": false
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules"]
 }
