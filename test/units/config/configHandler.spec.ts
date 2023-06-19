@@ -1,14 +1,14 @@
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as path from 'path';
-import { Config } from '../../src/config/ConfigHandler';
+import { Config } from 'src/config/ConfigHandler';
 
 chai.use(chaiAsPromised);
 
 describe('Config', () => {
   let configPath: string;
   let pattern: any;
-  const samplesDir = 'test/data/configExamples/';
+  const samplesDir = 'test/units/data/configExamples/';
 
   beforeEach(() => {
     pattern = {

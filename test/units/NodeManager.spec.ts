@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import * as chai from 'chai';
 import { expect } from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
-import SE_BRANCH from '../src/Tree/Branch';
-import SE_LEAF from '../src/Tree/Leaf';
-import SE_NODE from '../src/Tree/Node';
-import NodeManager from '../src/Tree/NodeManager';
-import SE_ROOT from '../src/Tree/Root';
-import SE_SENTINEL from '../src/Tree/Sentinel';
+import SE_BRANCH from 'src/Tree/Branch';
+import SE_LEAF from 'src/Tree/Leaf';
+import SE_NODE from 'src/Tree/Node';
+import NodeManager from 'src/Tree/NodeManager';
+import SE_ROOT from 'src/Tree/Root';
+import SE_SENTINEL from 'src/Tree/Sentinel';
 
 chai.use(chaiAsPromised);
 

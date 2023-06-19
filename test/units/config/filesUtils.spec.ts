@@ -1,19 +1,20 @@
-import { checkDirectory, checkFile, getMatchingFiles } from '../../src/config/filesUtils';
+/* eslint-disable no-empty */
+import { expect } from 'chai';
+import { randomBytes } from 'crypto';
 import * as fs from 'fs';
 import * as fsExtra from 'fs-extra';
 import * as path from 'path';
-import { expect } from 'chai';
-import SE_InvalidArgsError from '../../src/errors/SeInvalidArgsError';
-import { randomBytes } from 'crypto';
-import { after } from 'mocha';
+import { checkDirectory, checkFile, getMatchingFiles } from 'src/config/filesUtils';
 
 describe('checkDirectory', () => {
   const testDir = randomBytes(20).toString('hex');
 
   it('should not throw an error for an existing directory', () => {
-    try { fs.mkdirSync(testDir); } catch(e) {};
+    try {
+      fs.mkdirSync(testDir);
+    } catch (e) {}
     expect(() => checkDirectory(testDir)).to.not.throw();
-    fsExtra.rmSync(testDir, {force: true, recursive: true});
+    fsExtra.rmSync(testDir, { force: true, recursive: true });
   });
 
   it('should throw an error for a non-existent directory', () => {
@@ -26,13 +27,14 @@ describe('checkFile', () => {
   const testDir = randomBytes(20).toString('hex');
 
   beforeEach(() => {
-    try { fs.mkdirSync(testDir); } catch(e) {};
+    try {
+      fs.mkdirSync(testDir);
+    } catch (e) {}
   });
 
   afterEach(() => {
-    fsExtra.rmSync(testDir, {force: true, recursive: true});
+    fsExtra.rmSync(testDir, { force: true, recursive: true });
   });
-
 
   it('should not throw an error for an existing file with a valid name', () => {
     fs.writeFileSync(`${testDir}/file.script.js`, '');
@@ -54,22 +56,46 @@ describe('getMatchingFiles', () => {
 
   beforeEach(() => {
     // Create test directory and files
-    try { fs.mkdirSync(testDir); } catch(e) {};
-    try { fs.writeFileSync(`${testDir}/file1.script.js`, ``); } catch(e) {};
-    try { fs.writeFileSync(`${testDir}/file2.js`, ``); } catch(e) {};
-    try { fs.mkdirSync(`${testDir}/subdir`); } catch(e) {};
-    try { fs.writeFileSync(`${testDir}/subdir/file3.script.js`, ``); } catch(e) {};
-    try { fs.writeFileSync(`${testDir}/subdir/file4.js`, ``); } catch(e) {};
+    try {
+      fs.mkdirSync(testDir);
+    } catch (e) {}
+    try {
+      fs.writeFileSync(`${testDir}/file1.script.js`, ``);
+    } catch (e) {}
+    try {
+      fs.writeFileSync(`${testDir}/file2.js`, ``);
+    } catch (e) {}
+    try {
+      fs.mkdirSync(`${testDir}/subdir`);
+    } catch (e) {}
+    try {
+      fs.writeFileSync(`${testDir}/subdir/file3.script.js`, ``);
+    } catch (e) {}
+    try {
+      fs.writeFileSync(`${testDir}/subdir/file4.js`, ``);
+    } catch (e) {}
   });
 
   afterEach(() => {
     // Remove test directory and files
-    try { fs.unlinkSync(`${testDir}/subdir/file4.js`); } catch(e) {};
-    try { fs.unlinkSync(`${testDir}/subdir/file3.script.js`); } catch(e) {};
-    try { fs.rmdirSync(`${testDir}/subdir`); } catch(e) {};
-    try { fs.unlinkSync(`${testDir}/file2.js`); } catch(e) {};
-    try { fs.unlinkSync(`${testDir}/file1.script.js`); } catch(e) {};
-    try { fs.rmdirSync(`${testDir}`); } catch(e) {};
+    try {
+      fs.unlinkSync(`${testDir}/subdir/file4.js`);
+    } catch (e) {}
+    try {
+      fs.unlinkSync(`${testDir}/subdir/file3.script.js`);
+    } catch (e) {}
+    try {
+      fs.rmdirSync(`${testDir}/subdir`);
+    } catch (e) {}
+    try {
+      fs.unlinkSync(`${testDir}/file2.js`);
+    } catch (e) {}
+    try {
+      fs.unlinkSync(`${testDir}/file1.script.js`);
+    } catch (e) {}
+    try {
+      fs.rmdirSync(`${testDir}`);
+    } catch (e) {}
   });
 
   it(`should return an array of files that match the regex`, () => {
@@ -92,4 +118,3 @@ describe('getMatchingFiles', () => {
     expect(files).to.be.empty;
   });
 });
-
