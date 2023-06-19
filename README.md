@@ -22,8 +22,12 @@ ScriptEase is a powerful tool that allows for easy management and execution of n
 - [Runners](#runners)
 - [Script Throw system](#script-throw-system)
 - [Leaves Payload](#leaves-payload)
+- [Use Typescript](#use-typescript)
 - [Command line usage](#command-line-usage)
-  - [Run Command:](#run-command)
+  - [Options](#options)
+    - [**--file \<file1\> ... \<fileN\>**](#--file-file1--filen)
+    - [**--directory \<dir1\> ... \<dirN\>**](#--directory-dir1--dirn)
+    - [**--require \<module1\> ... \<moduleN\>**](#--require-module1--modulen)
 
 ## Installation
 
@@ -293,6 +297,17 @@ branch('cover', () => {
 });
 ```
 
+## Use Typescript
+
+By default, scriptEase will not be able to load your typescript files. But you can make this possible by loading a module that will compile your typescript files on the fly.
+
+For example, you can use [ts-node](https://www.npmjs.com/package/ts-node) :
+
+```sh
+npm install -D ts-node
+npx se run -r ts-node/register ...
+```
+
 ## Command line usage
 
 ```sh
@@ -301,34 +316,24 @@ npx se --help # Show the main help
 npx se run --help # Show the run command help
 ```
 
-```
-$ npx se --help
-Usage: se [options] [command]
+### Options
 
-CLI for running Javascript scripts
+#### **--file \<file1> ... \<fileN>**
 
-Options:
-  -V, --version           output the version number
-  -h, --help              display help for command
+> Alias: **-f**
 
-Commands:
-  run [options] <script>  Run a script
-  help [command]          display help for command
-```
+Load the given file.
 
-### Run Command:
+#### **--directory \<dir1> ... \<dirN>**
 
-```
-$ npx se run --help
-Usage: ScriptEase run [options] <script>
+> Alias: **-d**
 
-Run a script
+Load all the files in the given directories. files must have the following extension: .script.js or .script.ts
 
-Arguments:
-  script                            script name
+> By default, scriptEase is not able to load Typescript files. [Use Typescript](#use-typescript)
 
-Options:
-  -d, --directory <directories...>  Set the scripts directories
-  -f, --file <file...>              Set the files script
-  -h, --help                        display help for command
-```
+#### **--require \<module1> ... \<moduleN>**
+
+> Alias: **-r**
+
+Require the given module before running.

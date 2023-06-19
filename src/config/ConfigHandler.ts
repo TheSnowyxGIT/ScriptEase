@@ -31,11 +31,18 @@ const PATTERN: Pattern = {
       type: 'string',
     },
   },
+  require: {
+    type: 'array',
+    children: {
+      type: 'string',
+    },
+  },
 };
 
 export interface SEConfig {
   directories?: string[];
   files?: string[];
+  require?: string[];
 }
 
 /**
