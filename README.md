@@ -1,6 +1,5 @@
 [![NPM version](https://badge.fury.io/js/scriptease-cli.svg)](http://badge.fury.io/js/scriptease-cli)
 [![Coverage Status](https://coveralls.io/repos/github/TheSnowyxGIT/ScriptEase/badge.svg?branch=master)](https://coveralls.io/github/TheSnowyxGIT/ScriptEase?branch=master)
-[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ScriptEase is a powerful tool that allows for easy management and execution of npm scripts, written in JavaScript, on any operating system, enabling the creation of complex scripts
@@ -317,13 +316,13 @@ npx se run --help # Show the run command help
 
 ### Options
 
-#### **--file \<file1> ... \<fileN>**
+#### **--file \<file>**
 
 > Alias: **-f**
 
 Load the given file.
 
-#### **--directory \<dir1> ... \<dirN>**
+#### **--directory \<dir>**
 
 > Alias: **-d**
 
@@ -331,7 +330,7 @@ Load all the files in the given directories. files must have the following exten
 
 > By default, scriptEase is not able to load Typescript files. [Use Typescript](#use-typescript)
 
-#### **--require \<module1> ... \<moduleN>**
+#### **--require \<module>**
 
 > Alias: **-r**
 
