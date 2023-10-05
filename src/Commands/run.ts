@@ -19,8 +19,8 @@ interface RunMergedOptions {
 async function mergeRunOptions(argsOptions: any): Promise<RunMergedOptions> {
   const seConfig = await getSEConfig();
 
-  const directories = (seConfig.directories || []).concat(argsOptions.directory || []);
-  const files = (seConfig.files || []).concat(argsOptions.file || []);
+  const directories = (seConfig.directories || []).concat(argsOptions.directory ? [argsOptions.directory] : []);
+  const files = (seConfig.files || []).concat(argsOptions.file ? [argsOptions.file] : []);
   const extractedFiles = extractFiles(directories, files);
 
   return {
@@ -33,8 +33,8 @@ export default function getRunCommand() {
   const runCommand = new Command('run');
   runCommand.description('Run a script');
   runCommand.argument('<script>', 'script name');
-  runCommand.addOption(new Option('-d, --directory <directories...>', 'Set the scripts directories'));
-  runCommand.addOption(new Option('-f, --file <file...>', 'Set the files script'));
+  runCommand.addOption(new Option('-d, --directory <directory>', 'Set directory'));
+  runCommand.addOption(new Option('-f, --file <file>', 'Set file script'));
   runCommand.addOption(new Option('-r, --require <module...>', 'Require module'));
   runCommand.action(async (identifier, options) => {
     const mergedOptions = await mergeRunOptions(options);
