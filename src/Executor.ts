@@ -8,6 +8,7 @@ import SE_LEAF from './Tree/Leaf';
 import NodeManager from './Tree/NodeManager';
 import SE_ROOT from './Tree/Root';
 import SE_SENTINEL from './Tree/Sentinel';
+import { logger } from './Logger/Logger';
 
 interface runOption {
   crash: boolean;
@@ -31,6 +32,7 @@ export default class Executor {
       );
       throw new SE_MissingScriptError(identifier, bestMatch);
     }
+    logger.info(`RUN '${leaf.fullIdentifier}'`);
     const result = await this.exec(leaf, options);
     return result;
   }

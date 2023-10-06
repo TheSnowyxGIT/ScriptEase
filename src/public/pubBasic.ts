@@ -20,3 +20,15 @@ export function branch(identifier: string, after: () => void) {
   after();
   builder.moveHeadBack();
 }
+
+export function beforeEach(exec: (identifier: string) => Promise<void> | void) {
+  builder.insertBeforeEach(exec);
+}
+
+export function beforeOnce(exec: () => Promise<void> | void) {
+  builder.insertBeforeOnce(exec);
+}
+
+export function afterEach(exec: (identifier: string) => Promise<void> | void) {
+  builder.insertAfterEach(exec);
+}

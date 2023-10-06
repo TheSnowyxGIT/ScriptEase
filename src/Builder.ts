@@ -48,6 +48,26 @@ export default class Builder {
     }
   }
 
+  public insertBeforeEach(beforeEach: (identifier: string) => Promise<void> | void) {
+    const head = this.getHead();
+    head.beforeEach = { exec: beforeEach };
+  }
+
+  public insertAfterEach(afterEach: (identifier: string) => Promise<void> | void) {
+    const head = this.getHead();
+    head.afterEach = { exec: afterEach };
+  }
+
+  public insertBeforeOnce(beforeOnce: () => Promise<void> | void) {
+    const head = this.getHead();
+    head.beforeOnce = { exec: beforeOnce, called: false };
+  }
+
+  public insertAfterOnce(afterOnce: () => Promise<void> | void) {
+    const head = this.getHead();
+    head.afterOnce = { exec: afterOnce, called: false };
+  }
+
   public insert(node: SE_NODE): SE_NODE {
     if (node instanceof SE_ROOT) {
       throw new SE_InsertBuildError(node.type);
