@@ -1,3 +1,4 @@
+import didYouMean from 'didyoumean2';
 import SE_MissingScriptError from './errors/MissingScriptError';
 import LeafResult from './Result/LeafResult';
 import Result from './Result/Result';
@@ -23,7 +24,12 @@ export default class Executor {
     const leaf = await NodeManager.getLeaf(this.treeRoot, identifier);
     if (!leaf) {
       // No leaf found with the given identifier
-      throw new SE_MissingScriptError(identifier, this.treeRoot);
+      const leaves = await NodeManager.getLeaves(this.treeRoot);
+      const bestMatch = didYouMean(
+        identifier,
+        leaves.map((leaf) => leaf.identifier),
+      );
+      throw new SE_MissingScriptError(identifier, bestMatch);
     }
     const result = await this.exec(leaf, options);
     return result;
