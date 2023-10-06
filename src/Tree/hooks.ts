@@ -1,7 +1,7 @@
 import SE_DuplicateHookBuildError from '../errors/Build/SeDuplicateHookBuildError';
 
-export type Executable = () => Promise<void>;
-export type ExecutableInfo = (identifier: string) => Promise<void>;
+export type Executable = () => Promise<void> | void;
+export type ExecutableInfo = (identifier: string) => Promise<void> | void;
 
 interface Hook<T> {
   exec: T;

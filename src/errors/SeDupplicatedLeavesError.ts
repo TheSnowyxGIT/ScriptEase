@@ -22,7 +22,7 @@ export default class SE_DuplicatedLeavesError extends SE_ERROR {
     let text = chalk.gray('You cannot have duplicated leaves. Duplicated leaves : \n');
     for (const duplicatedLeaf of this.duplicatedLeaves) {
       text += chalk.gray("\tscript '") + chalk.white(duplicatedLeaf.identifier) + chalk.gray("' ");
-      text += chalk.gray('( occurences: ') + chalk.white(`${duplicatedLeaf.occurences}`) + chalk.grey(')\n');
+      text += chalk.gray('(occurences: ') + chalk.white(`${duplicatedLeaf.occurences}`) + chalk.grey(')\n');
     }
     return text;
   }

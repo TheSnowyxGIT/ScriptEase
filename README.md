@@ -130,7 +130,19 @@ leaf('test', async () => {
 
 ## Hooks
 
-Not available yet (coming soon)
+Hooks are functions that are executed before or after a script.
+
+```js
+beforeEach(async () => {
+  // ...
+});
+afterEach(async () => {
+  // ...
+});
+beforeAll(async () => {
+  // ...
+});
+```
 
 ## Dynamically generate script
 
