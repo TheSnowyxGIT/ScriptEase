@@ -9,6 +9,7 @@ import NodeManager from './Tree/NodeManager';
 import SE_ROOT from './Tree/Root';
 import SE_SENTINEL from './Tree/Sentinel';
 import { logger } from './Logger/Logger';
+import LoggerContext from './Logger/LoggerContext';
 
 interface runOption {
   crash: boolean;
@@ -16,9 +17,65 @@ interface runOption {
 
 export default class Executor {
   private treeRoot: SE_ROOT;
+  private loggerContext: LoggerContext;
 
   constructor(treeRoot: SE_ROOT) {
     this.treeRoot = treeRoot;
+    this.loggerContext = new LoggerContext(logger, 'Executor');
+    this.loggerContext.define('runLeaf', {
+      minLogLevel: 1,
+      writer: (logLevel, identifier: string) => {
+        return `run '${identifier}'`;
+      },
+    });
+    this.loggerContext.define('runBeforeOnce', {
+      minLogLevel: 1,
+      writer: (logLevel, data: { node: SE_BRANCH | SE_SENTINEL | SE_ROOT }) => {
+        if (data.node instanceof SE_BRANCH) {
+          return `run BeforeOnce in '${data.node.fullIdentifier}'`;
+        } else if (data.node instanceof SE_SENTINEL) {
+          return `run BeforeOnce in '${data.node.relativePath}'`;
+        } else {
+          return `run BeforeOnce in root`;
+        }
+      },
+    });
+    this.loggerContext.define('runAfterOnce', {
+      minLogLevel: 1,
+      writer: (logLevel, data: { node: SE_BRANCH | SE_SENTINEL | SE_ROOT }) => {
+        if (data.node instanceof SE_BRANCH) {
+          return `run AfterOnce in '${data.node.fullIdentifier}'`;
+        } else if (data.node instanceof SE_SENTINEL) {
+          return `run AfterOnce in '${data.node.relativePath}'`;
+        } else {
+          return `run AfterOnce in root`;
+        }
+      },
+    });
+    this.loggerContext.define('runBeforeEach', {
+      minLogLevel: 1,
+      writer: (logLevel, data: { node: SE_BRANCH | SE_SENTINEL | SE_ROOT }) => {
+        if (data.node instanceof SE_BRANCH) {
+          return `run BeforeEach in '${data.node.fullIdentifier}'`;
+        } else if (data.node instanceof SE_SENTINEL) {
+          return `run BeforeEach in '${data.node.relativePath}'`;
+        } else {
+          return `run BeforeEach in root`;
+        }
+      },
+    });
+    this.loggerContext.define('runAfterEach', {
+      minLogLevel: 1,
+      writer: (logLevel, data: { node: SE_BRANCH | SE_SENTINEL | SE_ROOT }) => {
+        if (data.node instanceof SE_BRANCH) {
+          return `run AfterEach in '${data.node.fullIdentifier}'`;
+        } else if (data.node instanceof SE_SENTINEL) {
+          return `run AfterEach in '${data.node.relativePath}'`;
+        } else {
+          return `run AfterEach in root`;
+        }
+      },
+    });
   }
 
   public async run(identifier: string, options: runOption): Promise<Result> {
@@ -32,7 +89,6 @@ export default class Executor {
       );
       throw new SE_MissingScriptError(identifier, bestMatch);
     }
-    logger.info(`RUN '${leaf.fullIdentifier}'`);
     const result = await this.exec(leaf, options);
     return result;
   }
@@ -55,8 +111,8 @@ export default class Executor {
             }
             if (node instanceof SE_ROOT || node instanceof SE_BRANCH || node instanceof SE_SENTINEL) {
               const hh = new HookHandler(node);
-              await hh.runBeforeOnce();
-              await hh.runBeforeEach(leaf.fullIdentifier);
+              await hh.runBeforeOnce(this.loggerContext);
+              await hh.runBeforeEach(leaf.fullIdentifier, this.loggerContext);
             }
           },
         },
@@ -64,7 +120,7 @@ export default class Executor {
           exec: async (node, depth) => {
             if (node instanceof SE_ROOT || node instanceof SE_BRANCH || node instanceof SE_SENTINEL) {
               const hh = new HookHandler(node);
-              await hh.runAfterEach(leaf.fullIdentifier);
+              await hh.runAfterEach(leaf.fullIdentifier, this.loggerContext);
             }
           },
         },
@@ -93,6 +149,7 @@ export default class Executor {
   }
 
   private async execLeaf(leaf: SE_LEAF): Promise<Result> {
+    this.loggerContext.send('runLeaf', leaf.identifier);
     const valueReceived = await leaf.exec();
     if (valueReceived instanceof Result) {
       const rootParent = valueReceived.getRootParent();

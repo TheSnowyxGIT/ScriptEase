@@ -48,3 +48,4 @@ export class Logger {
 }
 
 export const logger = new Logger();
+logger.logLevel = 2;

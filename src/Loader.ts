@@ -14,22 +14,22 @@ export default class Loader {
   constructor(infos: Infos, builder: Builder) {
     this.infos = infos;
     this.builder = builder;
-    this.loggerContext = new LoggerContext(logger);
+    this.loggerContext = new LoggerContext(logger, 'Loader');
     this.loggerContext.define('start', {
       minLogLevel: 2,
       writer: (logLevel, data: { filesCount: number }) => {
-        //logger.info(`${data.filesCount} files to load.`);
+        return `${data.filesCount} files to load.`;
       },
     });
     this.loggerContext.define('load', {
       minLogLevel: 2,
       writer: (logLevel, data: { filePath: number }) => {
-        //logger.info(`\t'${data.filePath}' loaded.`);
+        return `\t'${data.filePath}' loaded.`;
       },
     });
     this.loggerContext.define('end', {
       writer: (logLevel, data: { filesCount: number }) => {
-        //logger.info(`${data.filesCount} files loaded.`);
+        return `${data.filesCount} files loaded.`;
       },
     });
   }
@@ -41,7 +41,7 @@ export default class Loader {
     this.loggerContext.send('start', { filesCount: this.infos.files.length });
     for (const file of this.infos.files) {
       await this.loadFile(file);
-      this.loggerContext.send('load', { filePath: file });
+      this.loggerContext.send('load', { filePath: file.replace(process.cwd(), '') });
     }
     // after check
     await this.builder.checkBuild();

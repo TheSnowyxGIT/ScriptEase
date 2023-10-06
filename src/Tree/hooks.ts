@@ -1,3 +1,4 @@
+import LoggerContext from 'src/Logger/LoggerContext';
 import SE_DuplicateHookBuildError from '../errors/Build/SeDuplicateHookBuildError';
 
 export type Executable = () => Promise<void> | void;
@@ -28,28 +29,32 @@ export class HookHandler {
     this.hookable = hookable;
   }
 
-  async runBeforeOnce() {
+  async runBeforeOnce(loggerContext: LoggerContext) {
     if (this.hookable.beforeOnce && !this.hookable.beforeOnce.called) {
+      loggerContext.send('runBeforeOnce', { node: this.hookable });
       await this.hookable.beforeOnce.exec();
       this.hookable.beforeOnce.called = true;
     }
   }
 
-  async runAfterOnce() {
+  async runAfterOnce(loggerContext: LoggerContext) {
     if (this.hookable.afterOnce && !this.hookable.afterOnce.called) {
+      loggerContext.send('runAfterOnce', { node: this.hookable });
       await this.hookable.afterOnce.exec();
       this.hookable.afterOnce.called = true;
     }
   }
 
-  async runBeforeEach(identifier: string) {
+  async runBeforeEach(identifier: string, loggerContext: LoggerContext) {
     if (this.hookable.beforeEach) {
+      loggerContext.send('runBeforeEach', { node: this.hookable, identifier });
       await this.hookable.beforeEach.exec(identifier);
     }
   }
 
-  async runAfterEach(identifier: string) {
+  async runAfterEach(identifier: string, loggerContext: LoggerContext) {
     if (this.hookable.afterEach) {
+      loggerContext.send('runAfterEach', { node: this.hookable, identifier });
       await this.hookable.afterEach.exec(identifier);
     }
   }

@@ -14,6 +14,10 @@ class SE_SENTINEL extends SE_NODE implements Hookable {
     return this._filePath;
   }
 
+  public get relativePath() {
+    return this.filePath.replace(process.cwd(), '');
+  }
+
   public get nodes() {
     return this._nodes;
   }
